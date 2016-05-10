@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include "Triple.h"
 #include "ctbpos.h"
 
 
@@ -42,6 +43,14 @@ public:
     std::string dependency;
 };
 
+class TemplateNode:public ZparNode{
+public:
+    Slot slot;
+    bool isSlot= false;
+    TemplateNode(std::string pos,int parent_id,std::string dependency,std::string lexeme="");
+    void setSlot(Slot type);
+};
+
 template <typename U>
 class AbstractTree{
 public:
@@ -54,6 +63,19 @@ public:
     virtual AbstractNode<U>* get_Node(int id)=0;
 };
 
+class TemplateTree{
+public:
+    std::vector<TemplateNode*> nodes;
+    std::map<int,std::vector<int>> children_array;
+
+    void add_node(TemplateNode* node);
+    void set_children_array();
+    std::map<int,std::vector<int>> get_children_array();
+    TemplateNode* get_Node(int id);
+    TemplateNode* get_Root();
+    std::vector<int> get_children(int id);
+};
+
 class ZparTree:public AbstractTree<int>{
 public:
 
@@ -61,7 +83,7 @@ public:
     std::vector<ZparNode*> nodes;
     std::map<int,std::vector<int>> children_array;
     int lcaMatrix[100][100];
-    std::map<int,std::vector<int>> descendant_array;
+
 
     void add_node(ZparNode* node);
     void set_children_array();

@@ -4,6 +4,7 @@
 
 #include "TreeNode.h"
 
+//ZparNode method
 
 int ZparNode::get_parent() {
     return this->parent_id;
@@ -38,6 +39,18 @@ std::string ZparNode::get_lexeme() {
     return this->lexeme;
 }
 
+//TemplateNode method
+
+TemplateNode::TemplateNode(std::string pos, int parent_id, std::string dependency, std::string lexeme) {
+    ZparNode(lexeme,pos,parent_id,dependency);
+}
+
+void TemplateNode::setSlot(Slot type) {
+    this->slot = type;
+    this->isSlot = true;
+}
+
+//ZparTree method
 
 void ZparTree::add_node(ZparNode* node) {
 
@@ -143,4 +156,39 @@ AbstractNode<int>* ZparTree::getLeastCommonAncestorOf(AbstractNode<int> *begin, 
     int lca_id = lcaMatrix[begin_id][end_id];
 
     return nodes[lca_id];
+}
+
+//TemplateTree method
+
+void TemplateTree::add_node(TemplateNode *node) {
+    int j = this->nodes.size();
+    node->set_id(j);
+    this->nodes.push_back(node);
+}
+
+TemplateNode* TemplateTree::get_Node(int id) {
+    return nodes[id];
+}
+
+TemplateNode* TemplateTree::get_Root() {
+    for(auto node:nodes){
+        if(node->get_parent()==-1)
+            return node;
+    }
+}
+
+void TemplateTree::set_children_array() {
+    for(int i=0;i<nodes.size();i++){
+        if(nodes[i]->get_parent()!=-1){
+            children_array[nodes[i]->get_parent()].push_back(i);
+        }
+    }
+}
+
+std::map<int,std::vector<int>> TemplateTree::get_children_array() {
+    return this->children_array;
+}
+
+std::vector<int> TemplateTree::get_children(int id) {
+    return this->children_array.at(id);
 }
