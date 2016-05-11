@@ -17,11 +17,22 @@ void TemplatesFromTree<T>::CreateTemplates() {
 
                 TemplateTree *templateTree = new TemplateTree();
 
-                std::string up = halfPathToString(begin,common, true,TemplateTree *templateTree);
-                std::string down = halfPathToString(end,common, false,TemplateTree *templateTree);
+                //add subtree node left
+                std::string up = halfPathToString(begin,common, true,templateTree);
+
+                //sub tree root
+                TemplateNode *rootNode = new TemplateNode(common);
+                lcaNode->parent_id=-1;
+                templateTree->add_node(rootNode);
+
+                //add subtree node right
+                std::string down = halfPathToString(end,common, false,templateTree);
+
+                //change last right node parent id
+                TemplateNode *last = templateTree->nodes.back();
+                last->parent_id=rootNode->id;
 
                 //the sub_tree
-                templateTree->add_node(new TemplateNode(common));
                 templateTree->set_children_array();
 
                 //push to the templateTrees
@@ -35,7 +46,6 @@ void TemplatesFromTree<T>::CreateTemplates() {
                 auto result = templates_path.insert(path);
 
                 //Inset triple
-
                 Triple *triple_b = new Triple(Word(begin->get_lexeme(),begin->get_pos()),path,Slot::SlotX);
 
                 Triple *triple_e = new Triple(Word(end->get_lexeme(),end->get_pos()),path,Slot::SlotY);
@@ -48,7 +58,7 @@ void TemplatesFromTree<T>::CreateTemplates() {
 }
 
 template <typename T>
-std::string TemplatesFromTree<T>::halfPathToString(AbstractNode<T> *begin, AbstractNode<T> *common, bool direction) {
+std::string TemplatesFromTree<T>::halfPathToString(AbstractNode<T> *begin, AbstractNode<T> *common, bool direction,TemplateTree* templateTree) {
     std::stack<std::string> path;
     if(begin!=common){
 
@@ -57,6 +67,7 @@ std::string TemplatesFromTree<T>::halfPathToString(AbstractNode<T> *begin, Abstr
 
         TemplateNode *templateNode = new TemplateNode(begin);
         templateNode->dependency=depinfo;
+        templateNode->parent_id=templateTree->nodes.size()+1;
         //direction up slotx
         if(direction){
             templateNode->setSlot(Slot::SlotX);
@@ -76,7 +87,10 @@ std::string TemplatesFromTree<T>::halfPathToString(AbstractNode<T> *begin, Abstr
             //add node to template tree
             TemplateNode *templateNode = new TemplateNode(current);
             templateNode->dependency=depinfo;
+            templateNode->parent_id=templateTree->nodes.size()+1;
             templateTree->add_node(templateNode);
+
+            current = tree->get_Node(current->get_parent());
         }
     }
     std::string delimiter =">";
