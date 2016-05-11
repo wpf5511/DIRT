@@ -12,19 +12,24 @@ struct Word{
 
     std::string lexeme;
     std::string pos;
-
+    Word(std::string,std::string);
+    bool operator !=(Word other){
+        return lexeme!=other.lexeme||pos!=other.pos;
+    }
 };
 enum Slot{
     SlotX,
     SlotY
 };
 class Triple {
-private:
-    Word w;
-    std::string md5_path;
-    Slot slot;
+
 public:
+    Word w;
+    std::string template_path;
+    Slot slot;
+//functions
     std::vector<Word> getSlot(std::string path);//get another slot
+    Triple(Word w,std::string template_path,Slot slot);
 };
 
 

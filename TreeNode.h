@@ -34,6 +34,8 @@ public:
     virtual std::string get_lexeme();
 
     ZparNode(std::string lexeme,std::string pos,int parent_id,std::string dependency);
+
+
     void set_id(int);
 
     int id;
@@ -47,8 +49,12 @@ class TemplateNode:public ZparNode{
 public:
     Slot slot;
     bool isSlot= false;
-    TemplateNode(std::string pos,int parent_id,std::string dependency,std::string lexeme="");
+    TemplateNode(int parent_id,std::string dependency,std::string pos,std::string lexeme);
+    TemplateNode(AbstractNode<int>* zparNode);//TemplateNode 的dependency为pos:dependency:dependency
     void setSlot(Slot type);
+    bool operator !=(TemplateNode other){
+        return id!=other.id||lexeme!=other.lexeme||pos!=other.pos||parent_id!=other.parent_id||dependency!=other.dependency;
+    }
 };
 
 template <typename U>

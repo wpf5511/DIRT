@@ -14,11 +14,34 @@ void TemplatesFromTree<T>::CreateTemplates() {
             //不是直接的父子关系
             if(end!=begin&&end->get_parent()!=begin->get_id()&&begin->get_parent()!=end->get_id()){
                 AbstractNode<T>* common = tree->getLeastCommonAncestorOf(begin,end);//不进行路径过滤先
-                std::string up = halfPathToString(begin,common, true);
-                std::string down = halfPathToString(end,common, false);
+
+                TemplateTree *templateTree = new TemplateTree();
+
+                std::string up = halfPathToString(begin,common, true,TemplateTree *templateTree);
+                std::string down = halfPathToString(end,common, false,TemplateTree *templateTree);
+
+                //the sub_tree
+                templateTree->add_node(new TemplateNode(common));
+                templateTree->set_children_array();
+
+                //push to the templateTrees
+                templateTrees.insert(templateTree);
+
+
                 std::string path = up.append("<").append(common->get_lexeme())
                 .append(">").append(down);
-                templates_path.insert(path);
+
+
+                auto result = templates_path.insert(path);
+
+                //Inset triple
+
+                Triple *triple_b = new Triple(Word(begin->get_lexeme(),begin->get_pos()),path,Slot::SlotX);
+
+                Triple *triple_e = new Triple(Word(end->get_lexeme(),end->get_pos()),path,Slot::SlotY);
+
+                tri_count[triple_b]+=1;
+                tri_count[triple_e]+=1;
             }
         }
     }
@@ -28,11 +51,32 @@ template <typename T>
 std::string TemplatesFromTree<T>::halfPathToString(AbstractNode<T> *begin, AbstractNode<T> *common, bool direction) {
     std::stack<std::string> path;
     if(begin!=common){
-        path.push(dependencyInfo(begin,direction));//省略push开头词
+
+        std::string depinfo = dependencyInfo(begin,direction);
+        path.push(depinfo);//省略push开头词
+
+        TemplateNode *templateNode = new TemplateNode(begin);
+        templateNode->dependency=depinfo;
+        //direction up slotx
+        if(direction){
+            templateNode->setSlot(Slot::SlotX);
+            templateTree->add_node(templateNode);
+        }
+        else{
+            templateNode->setSlot(Slot::SlotY);
+            templateTree->add_node(templateNode);
+        }
         auto current = tree->get_Node(begin->get_parent());
         while(current!=common){
+            //add to string
             path.push(current->get_lexeme());
-            path.push(dependencyInfo(current,direction));
+            std::string depinfo = dependencyInfo(current,direction);
+            path.push(depinfo);
+
+            //add node to template tree
+            TemplateNode *templateNode = new TemplateNode(current);
+            templateNode->dependency=depinfo;
+            templateTree->add_node(templateNode);
         }
     }
     std::string delimiter =">";

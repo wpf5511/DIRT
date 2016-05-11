@@ -17,6 +17,13 @@ ZparNode::ZparNode(std::string lexeme, std::string pos, int parent_id, std::stri
     this->dependency = dependency;
 }
 
+ZparNode::ZparNode(const ZparNode &node) {
+    this->lexeme = node.lexeme;
+    this->pos = node.pos;
+    this->parent_id = node.parent_id;
+    this->dependency = node.dependency;
+}
+
 void ZparNode::set_id(int j) {
     this->id = j;
 }
@@ -41,13 +48,22 @@ std::string ZparNode::get_lexeme() {
 
 //TemplateNode method
 
-TemplateNode::TemplateNode(std::string pos, int parent_id, std::string dependency, std::string lexeme) {
+TemplateNode::TemplateNode(int parent_id, std::string dependency,std::string pos, std::string lexeme) {
     ZparNode(lexeme,pos,parent_id,dependency);
 }
 
 void TemplateNode::setSlot(Slot type) {
+    this->lexeme="";
+    this->pos="";
     this->slot = type;
     this->isSlot = true;
+}
+
+TemplateNode::TemplateNode(AbstractNode<int> *zparNode) {
+    this->pos = zparNode->get_pos();
+    this->lexeme = zparNode->get_lexeme();
+    this->dependency = zparNode->get_dependency();
+    this->parent_id = zparNode->get_parent();
 }
 
 //ZparTree method
