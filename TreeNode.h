@@ -55,6 +55,10 @@ public:
     bool operator !=(TemplateNode other){
         return id!=other.id||lexeme!=other.lexeme||pos!=other.pos||parent_id!=other.parent_id||dependency!=other.dependency;
     }
+
+    std::string toString(){
+        return lexeme+"\t"+pos+"\t"+to_string(parent_id)+"\t"+dependency;
+    }
 };
 
 template <typename U>
@@ -73,6 +77,8 @@ class TemplateTree{
 public:
     std::vector<TemplateNode*> nodes;
     std::map<int,std::vector<int>> children_array;
+    std::string template_string;
+    std::string toString();
 
     void add_node(TemplateNode* node);
     void set_children_array();

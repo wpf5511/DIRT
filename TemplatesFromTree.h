@@ -9,6 +9,7 @@
 #include <string>
 #include <map>
 #include <stack>
+#include <fstream>
 
 #include "TreeNode.h"
 
@@ -40,15 +41,17 @@ struct TripleComp{
 template <typename T>
 class TemplatesFromTree {
 
-
+public:
     std::set<std::string> templates_path;
     //std::map<std::string,std::string> id_to_path;
     AbstractTree<T>* tree;
 
     //below should be global
-    std::map<Triple*,int,TripleComp> tri_count;
+    /*std::map<Triple*,int,TripleComp> tri_count;
 
-    std::set<TemplateTree*,TreeComp> templateTrees;
+    std::map<TemplateTree*,int,TreeComp> templateTrees;
+
+    std::map<int,TemplateTree*> id_to_Tree;*/
 
     void CreateTemplates();
 
@@ -60,5 +63,21 @@ class TemplatesFromTree {
     std::string dependencyInfo(AbstractNode<T>*node,bool direction,TemplateTree* templateTree);
 };
 
+struct {
+    Word x;
+    Word y;
+
+    std::vector<std::tuple<int,int>> list_of_templates;
+
+};
+
+void save(std::map<int,TemplateTree*> id_to_tree,std::string filename){
+    ofstream output(filename,ios::out);
+
+    for(auto it=id_to_tree.begin();it!=id_to_tree.end();it++){
+        output<<it->first<<endl;
+        output<<it->second.to_String();
+    }
+}
 
 #endif //DIRT_TEMPLATESFROMTREE_H

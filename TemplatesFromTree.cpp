@@ -35,15 +35,17 @@ void TemplatesFromTree<T>::CreateTemplates() {
                 //the sub_tree
                 templateTree->set_children_array();
 
-                //push to the templateTrees
-                templateTrees.insert(templateTree);
-
 
                 std::string path = up.append("<").append(common->get_lexeme())
                 .append(">").append(down);
 
+                //push to the templateTrees
+                templateTree->template_string = path;
+                auto insert_res = templateTrees.insert({templateTree,i});
+                if(insert_res.second){
+                    id_to_Tree.insert({i++,templateTree});
+                }
 
-                auto result = templates_path.insert(path);
 
                 //Inset triple
                 Triple *triple_b = new Triple(Word(begin->get_lexeme(),begin->get_pos()),path,Slot::SlotX);

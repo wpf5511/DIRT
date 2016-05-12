@@ -208,3 +208,11 @@ std::map<int,std::vector<int>> TemplateTree::get_children_array() {
 std::vector<int> TemplateTree::get_children(int id) {
     return this->children_array.at(id);
 }
+
+std::string TemplateTree::toString() {
+    std::string tree_string;
+    for(auto node:nodes){
+        tree_string = tree_string+node->toString()+"\n";
+    }
+    return tree_string;
+}
