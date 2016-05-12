@@ -16,6 +16,10 @@ struct Word{
     bool operator !=(Word other){
         return lexeme!=other.lexeme||pos!=other.pos;
     }
+    /*bool operator =(Word copy){
+        this->lexeme = copy.lexeme;
+        this->pos = copy.pos;
+    }*/
 };
 enum Slot{
     SlotX,

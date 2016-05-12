@@ -100,6 +100,11 @@ public:
     void add_node(ZparNode* node);
     void set_children_array();
     void set_lcaMatrix();
+    ~ZparTree(){
+        for(auto node:nodes){
+            delete node;
+        }
+    }
 
 
     std::vector<int> path_to_ancestor(int current,int ancestor);

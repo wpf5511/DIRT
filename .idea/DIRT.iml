@@ -2,7 +2,15 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/TemplatesFromTree.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ctbpos.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TreeNode.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Triple.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ctbpos.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TreeNode.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Triple.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TemplatesFromTree.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
