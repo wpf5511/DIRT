@@ -12,7 +12,7 @@ void TemplatesFromTree<T>::CreateTemplates() {
     for(auto begin:endPoints){
         for(auto end:endPoints){
             //不是直接的父子关系
-            if(end!=begin&&end->get_parent()!=begin->get_id()&&begin->get_parent()!=end->get_id()){
+            if(end!=begin&&end->get_parent()!=begin->get_Id()&&begin->get_parent()!=end->get_Id()){
                 AbstractNode<T>* common = tree->getLeastCommonAncestorOf(begin,end);//不进行路径过滤先
 
                 TemplateTree *templateTree = new TemplateTree();
@@ -22,7 +22,7 @@ void TemplatesFromTree<T>::CreateTemplates() {
 
                 //sub tree root
                 TemplateNode *rootNode = new TemplateNode(common);
-                lcaNode->parent_id=-1;
+                rootNode->parent_id=-1;
                 templateTree->add_node(rootNode);
 
                 //add subtree node right
@@ -159,7 +159,7 @@ template <typename T>
 std::string TemplatesFromTree<T>::dependencyInfo(AbstractNode<T> *node,bool direction) {
 
     std::string node_pos_info = posOfInfo(node->get_pos());
-    std::string parent_pos_info = posOfInfo(tree->get_Node(node->get_parent()));
+    std::string parent_pos_info = posOfInfo(tree->get_Node(node->get_parent())->get_pos());
     if(direction){
         return node_pos_info.append(":").append(parent_pos_info);
     }
@@ -167,3 +167,5 @@ std::string TemplatesFromTree<T>::dependencyInfo(AbstractNode<T> *node,bool dire
         return parent_pos_info.append(":").append(node_pos_info);
     }
 }
+
+template  class  TemplatesFromTree<int>;

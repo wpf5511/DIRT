@@ -12,6 +12,8 @@
 #include "ctbpos.h"
 
 
+template <typename >class AbstractTree;
+
 template<typename T>
 class AbstractNode {
 public:
@@ -34,7 +36,7 @@ public:
     virtual std::string get_lexeme();
 
     ZparNode(std::string lexeme,std::string pos,int parent_id,std::string dependency);
-
+    ZparNode(const ZparNode &node);
 
     void set_id(int);
 
@@ -57,7 +59,7 @@ public:
     }
 
     std::string toString(){
-        return lexeme+"\t"+pos+"\t"+to_string(parent_id)+"\t"+dependency;
+        return lexeme+"\t"+pos+"\t"+std::to_string(parent_id)+"\t"+dependency;
     }
 };
 
@@ -113,7 +115,7 @@ public:
     virtual std::map<int,std::vector<int>> get_children_array();
     virtual std::vector<AbstractNode<int>*> findEndpoints();
     virtual AbstractNode<int>* getLeastCommonAncestorOf(AbstractNode<int> *begin,AbstractNode<int> *end);
-    virtual AbstractNode<int>* get_Node(int id)=0;
+    virtual AbstractNode<int>* get_Node(int id);
 
 };
 

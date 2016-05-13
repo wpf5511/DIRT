@@ -11,8 +11,7 @@ Word::Word(std::string lexeme, std::string pos) {
     this->pos = pos;
 }
 
-Triple::Triple(Word w, std::string template_path, Slot slot) {
-    this->w = w;
+Triple::Triple(Word word, std::string template_path, Slot slot):w(word) {
     this->template_path = template_path;
     this->slot = slot;
 }

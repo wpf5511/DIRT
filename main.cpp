@@ -10,6 +10,8 @@ std::map<TemplateTree*,int,TreeComp> templateTrees;
 
 std::map<int,TemplateTree*> id_to_Tree;
 
+Tri_Pair tri_pair;
+
 int main() {
 
     TemplatesFromTree<int> templatesFromTree;
@@ -34,7 +36,7 @@ int main() {
 
             is>>lexeme>>pos>>parent_id>>dependency;
 
-            zparTree->add_node(new ZparNode(lexeme,pos,parent_id,dependency));
+            zparTree->add_node(new ZparNode(lexeme,pos,stoi(parent_id),dependency));
         }
     }
 

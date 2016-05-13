@@ -12,14 +12,11 @@ struct Word{
 
     std::string lexeme;
     std::string pos;
+    Word(){}
     Word(std::string,std::string);
     bool operator !=(Word other){
         return lexeme!=other.lexeme||pos!=other.pos;
     }
-    /*bool operator =(Word copy){
-        this->lexeme = copy.lexeme;
-        this->pos = copy.pos;
-    }*/
 };
 enum Slot{
     SlotX,

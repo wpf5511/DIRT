@@ -48,8 +48,8 @@ std::string ZparNode::get_lexeme() {
 
 //TemplateNode method
 
-TemplateNode::TemplateNode(int parent_id, std::string dependency,std::string pos, std::string lexeme) {
-    ZparNode(lexeme,pos,parent_id,dependency);
+TemplateNode::TemplateNode(int parent_id, std::string dependency,std::string pos, std::string lexeme):ZparNode(lexeme,pos,parent_id,dependency) {
+
 }
 
 void TemplateNode::setSlot(Slot type) {
@@ -59,11 +59,8 @@ void TemplateNode::setSlot(Slot type) {
     this->isSlot = true;
 }
 
-TemplateNode::TemplateNode(AbstractNode<int> *zparNode) {
-    this->pos = zparNode->get_pos();
-    this->lexeme = zparNode->get_lexeme();
-    this->dependency = zparNode->get_dependency();
-    this->parent_id = zparNode->get_parent();
+TemplateNode::TemplateNode(AbstractNode<int> *zparNode):ZparNode(zparNode->get_lexeme(),zparNode->get_pos(),
+                                                        zparNode->get_parent(),zparNode->get_dependency()) {
 }
 
 //ZparTree method
@@ -93,7 +90,7 @@ std::map<int,std::vector<int>> ZparTree::get_children_array() {
     return this->children_array;
 }
 
-int ZparNode::get_id() {
+int ZparNode::get_Id() {
     return this->id;
 }
 
@@ -133,7 +130,7 @@ void ZparTree::set_lcaMatrix() {
 }
 
 AbstractNode<int>* ZparTree::get_Node(int id) {
-    return nodes[i];
+    return nodes[id];
 }
 
 std::vector<int> ZparTree::path_to_ancestor(int current, int ancestor) {
