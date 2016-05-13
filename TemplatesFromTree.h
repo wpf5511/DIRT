@@ -94,13 +94,4 @@ struct Tri_Pair{
 
 };
 
-void save(std::map<int,TemplateTree*> id_to_tree,std::string filename){
-    std::ofstream output(filename,std::ios::out);
-
-    for(auto it=id_to_tree.begin();it!=id_to_tree.end();it++){
-        output<<it->first<<std::endl;
-        output<<it->second->toString();
-    }
-}
-
 #endif //DIRT_TEMPLATESFROMTREE_H
