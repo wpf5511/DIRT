@@ -40,7 +40,7 @@ int main() {
         }
     }
 
-    TemplatesFromTree::save(id_to_Tree,"/home/wpf/template_file.txt")
+    TemplatesFromTree<int>::save(id_to_Tree,"/home/wpf/template_file.txt");
 
 
     cout << "Hello, World!" << endl;
