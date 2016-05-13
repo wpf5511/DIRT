@@ -70,6 +70,8 @@ public:
 
     void CreateTemplates();
 
+    static void save(std::map<int,TemplateTree*> id_to_tree,std::string filename);
+
     //direction = true means up
     std::string halfPathToString(AbstractNode<T>*begin,AbstractNode<T>*end,bool direction,TemplateTree* templateTree);
 

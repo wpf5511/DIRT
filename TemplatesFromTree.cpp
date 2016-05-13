@@ -167,8 +167,10 @@ std::string TemplatesFromTree<T>::dependencyInfo(AbstractNode<T> *node,bool dire
         return parent_pos_info.append(":").append(node_pos_info);
     }
 }
+template <typename T>
 
-void save(std::map<int,TemplateTree*> id_to_tree,std::string filename){
+void TemplatesFromTree<T>::save(std::map<int, TemplateTree *> id_to_tree, std::string filename) {
+
     std::ofstream output(filename,std::ios::out);
 
     for(auto it=id_to_tree.begin();it!=id_to_tree.end();it++){
@@ -176,5 +178,6 @@ void save(std::map<int,TemplateTree*> id_to_tree,std::string filename){
         output<<it->second->toString();
     }
 }
+
 
 template  class  TemplatesFromTree<int>;
