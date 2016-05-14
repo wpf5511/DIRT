@@ -107,8 +107,10 @@ std::string TemplatesFromTree<T>::halfPathToString(AbstractNode<T> *begin, Abstr
     }
 
     std::string sb;
-    sb.append(path.top());
-    path.pop();
+    if(path.empty()){
+        sb.append(path.top());
+        path.pop();
+    }
     while (!path.empty()){
         sb.append(delimiter);
         sb.append(path.top());
