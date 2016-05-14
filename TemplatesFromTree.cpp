@@ -41,11 +41,31 @@ void TemplatesFromTree<T>::CreateTemplates() {
 
                 //push to the templateTrees
                 templateTree->template_string = path;
+
                 auto insert_res = templateTrees.insert({templateTree,i});
                 if(insert_res.second){
                     id_to_Tree.insert({i++,templateTree});
                 }
 
+                int templateTree_id = templateTrees.at(templateTree);
+
+                std::map<int,int> a_list_of_template;
+
+
+                Word_Pair w_pair(Word(begin->get_lexeme(),begin->get_pos()),Word(end->get_lexeme(),end->get_pos()));
+
+                auto matrix_it = template_matrix.find(w_pair);
+
+
+                if(matrix_it!=template_matrix.end()){
+                    auto &res_list = template_matrix.at(w_pair);
+                    res_list[templateTree_id]++;
+                }else{
+                    a_list_of_template.insert({templateTree_id,1});
+                    template_matrix.insert({w_pair,a_list_of_template});
+                }
+
+                //a_list_of_template.insert({i,count});
 
                 //Inset triple
                 Triple *triple_b = new Triple(Word(begin->get_lexeme(),begin->get_pos()),path,Slot::SlotX);

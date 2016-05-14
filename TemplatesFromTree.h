@@ -49,7 +49,7 @@ extern std::map<TemplateTree*,int,TreeComp> templateTrees;
 
 extern std::map<int,TemplateTree*> id_to_Tree;
 
-extern Tri_Pair tri_pair;
+extern std::map<Word_Pair,std::map<int,int>> template_matrix;
 
 
 template <typename T>
@@ -93,6 +93,23 @@ struct Tri_Pair{
     Tri_Pair(Word x1,Word y1):x(x1),y(y1){
 
     }
+
+};
+
+struct Word_Pair{
+    Word x;
+    Word y;
+
+    Word_Pair(Word x1,Word y1):x(x1),y(y1){
+
+    }
+
+    bool operator <(Word_Pair other){
+
+        return x!=other.x||y!=other.y;
+
+    }
+
 
 };
 

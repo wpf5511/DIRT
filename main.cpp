@@ -10,7 +10,7 @@ std::map<TemplateTree*,int,TreeComp> templateTrees;
 
 std::map<int,TemplateTree*> id_to_Tree;
 
-Tri_Pair tri_pair;
+std::map<Word_Pair,std::map<int,int>> template_matrix;
 
 int main() {
 
