@@ -96,7 +96,7 @@ public:
 
     std::vector<ZparNode*> nodes;
     std::map<int,std::vector<int>> children_array;
-    int lcaMatrix[100][100];
+    int lcaMatrix[200][200];
 
 
     void add_node(ZparNode* node);

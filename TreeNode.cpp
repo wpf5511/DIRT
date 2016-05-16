@@ -117,14 +117,12 @@ void ZparTree::set_lcaMatrix() {
 
     for(int i=0;i<nodes.size();i++){
         for(int j=i+1;j<nodes.size();j++){
-            if(i!=root_id && j!=root_id){
+
                 auto path1 = path_to_ancestor(i,root_id);
                 auto path2 = path_to_ancestor(j,root_id);
                 auto lca_id = get_lca_id(path1,path2);
 
                 lcaMatrix[i][j]=lcaMatrix[j][i]=lca_id;
-
-            }
         }
     }
 }
@@ -137,7 +135,7 @@ std::vector<int> ZparTree::path_to_ancestor(int current, int ancestor) {
 
     std::vector<int>Path;
 
-    while(nodes[current]->get_parent()!=ancestor){
+    while(nodes[current]->get_parent()!=-1){
         Path.push_back(current);
         current = nodes[current]->get_parent();
     }
@@ -148,7 +146,7 @@ std::vector<int> ZparTree::path_to_ancestor(int current, int ancestor) {
 
 int ZparTree::get_lca_id(std::vector<int>path1, std::vector<int>path2) {
 
-    for(auto i=path1.rbegin(),j=path2.rbegin();i!=path1.rend()&&j!=path2.rend();i++,j++){
+    for(auto i=path1.rbegin(),j=path2.rbegin();;i++,j++){
 
         if(i==path1.rend()){
             return *i.base();

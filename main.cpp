@@ -16,7 +16,7 @@ int main() {
 
     TemplatesFromTree<int> templatesFromTree;
 
-    ifstream Zparfile("/Users/wangpf/Downloads/reference-4.txt");
+    ifstream Zparfile("/home/hadoop4/reference-4.txt",ios::in);
 
     ZparTree *zparTree = new ZparTree();
 
@@ -32,15 +32,18 @@ int main() {
             zparTree = new ZparTree();
         }
         else{
+           // cout<<line<<endl;
             istringstream is(line);
 
             is>>lexeme>>pos>>parent_id>>dependency;
+
+            //cout<<lexeme<<pos<<parent_id<<dependency<<endl;
 
             zparTree->add_node(new ZparNode(lexeme,pos,stoi(parent_id),dependency));
         }
     }
 
-    TemplatesFromTree<int>::save(id_to_Tree,"/home/wpf/template_file.txt");
+    TemplatesFromTree<int>::save(id_to_Tree,"/home/hadoop4/template_file.txt");
 
 
     cout << "Hello, World!" << endl;
