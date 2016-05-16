@@ -6,11 +6,11 @@ using namespace std;
 int i=0;
 std::map<Triple*,int,TripleComp> tri_count;
 
-std::map<TemplateTree*,int,TreeComp> templateTrees;
+std::map<TemplateTree,int> templateTrees;
 
-std::map<int,TemplateTree*> id_to_Tree;
+std::map<int,TemplateTree> id_to_Tree;
 
-Tri_Pair tri_pair;
+std::map<Word_Pair,std::map<int,int>> template_matrix;
 
 int main() {
 
@@ -43,7 +43,7 @@ int main() {
         }
     }
 
-    TemplatesFromTree<int>::save(id_to_Tree,"/home/hadoop4/template_file.txt");
+    TemplatesFromTree<int>::save(id_to_Tree,"/home/hadoop4/template_file3.txt");
 
 
     cout << "Hello, World!" << endl;

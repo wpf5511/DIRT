@@ -23,6 +23,7 @@ void TemplatesFromTree<T>::CreateTemplates() {
                 //sub tree root
                 TemplateNode *rootNode = new TemplateNode(common);
                 rootNode->parent_id=-1;
+                rootNode->dependency="ROOT";
                 templateTree->add_node(rootNode);
 
                 //add subtree node right
@@ -41,11 +42,35 @@ void TemplatesFromTree<T>::CreateTemplates() {
 
                 //push to the templateTrees
                 templateTree->template_string = path;
-                auto insert_res = templateTrees.insert({templateTree,i});
+
+                auto insert_res = templateTrees.insert({*templateTree,i});
                 if(insert_res.second){
-                    id_to_Tree.insert({i++,templateTree});
+                    id_to_Tree.insert({i++,*templateTree});
                 }
 
+                auto iter = templateTrees.find(*templateTree);
+                if(iter==templateTrees.end()){
+                    printf("hehe\n");
+                }
+                int templateTree_id = iter->second;
+
+                std::map<int,int> a_list_of_template;
+
+
+                Word_Pair w_pair(Word(begin->get_lexeme(),begin->get_pos()),Word(end->get_lexeme(),end->get_pos()));
+
+                auto matrix_it = template_matrix.find(w_pair);
+
+
+                if(matrix_it!=template_matrix.end()){
+                    auto &res_list = template_matrix.at(w_pair);
+                    res_list[templateTree_id]++;
+                }else{
+                    a_list_of_template.insert({templateTree_id,1});
+                    template_matrix.insert({w_pair,a_list_of_template});
+                }
+
+                //a_list_of_template.insert({i,count});
 
                 //Inset triple
                 Triple *triple_b = new Triple(Word(begin->get_lexeme(),begin->get_pos()),path,Slot::SlotX);
@@ -163,21 +188,21 @@ std::string TemplatesFromTree<T>::dependencyInfo(AbstractNode<T> *node,bool dire
     std::string node_pos_info = posOfInfo(node->get_pos());
     std::string parent_pos_info = posOfInfo(tree->get_Node(node->get_parent())->get_pos());
     if(direction){
-        return node_pos_info.append(":").append(parent_pos_info);
+        return node_pos_info.append(":").append(node->get_dependency()).append(":").append(parent_pos_info);
     }
     else{
-        return parent_pos_info.append(":").append(node_pos_info);
+        return parent_pos_info.append(":").append(node->get_dependency()).append(":").append(node_pos_info);
     }
 }
 template <typename T>
 
-void TemplatesFromTree<T>::save(std::map<int, TemplateTree *> id_to_tree, std::string filename) {
+void TemplatesFromTree<T>::save(std::map<int, TemplateTree> id_to_tree, std::string filename) {
 
     std::ofstream output(filename,std::ios::out);
 
     for(auto it=id_to_tree.begin();it!=id_to_tree.end();it++){
         output<<it->first<<std::endl;
-        output<<it->second->toString();
+        output<<it->second.toString();
     }
 }
 

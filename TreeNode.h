@@ -54,8 +54,15 @@ public:
     TemplateNode(int parent_id,std::string dependency,std::string pos,std::string lexeme);
     TemplateNode(AbstractNode<int>* zparNode);//TemplateNode 的dependency为pos:dependency:dependency
     void setSlot(Slot type);
-    bool operator !=(TemplateNode other){
-        return id!=other.id||lexeme!=other.lexeme||pos!=other.pos||parent_id!=other.parent_id||dependency!=other.dependency;
+    bool operator <(TemplateNode& other){
+        if(id!=other.id)return id<other.id;
+        if(lexeme!=other.lexeme)return lexeme<other.lexeme;
+        if(pos!=other.pos)return pos<other.pos;
+        return dependency<other.dependency;
+    }
+
+    bool operator !=(TemplateNode& other){
+        return id!=other.id||lexeme!=other.lexeme||pos!=other.pos||dependency!=other.dependency;
     }
 
     std::string toString(){
@@ -88,6 +95,16 @@ public:
     TemplateNode* get_Node(int id);
     TemplateNode* get_Root();
     std::vector<int> get_children(int id);
+
+    bool operator <(TemplateTree other)const{
+        if(this->nodes.size()!=other.nodes.size()){
+            return this->nodes.size()<other.nodes.size();
+        }
+        else{
+            return this->template_string<other.template_string;
+        }
+    }
+
 };
 
 class ZparTree:public AbstractTree<int>{

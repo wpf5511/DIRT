@@ -14,8 +14,13 @@ struct Word{
     std::string pos;
     Word(){}
     Word(std::string,std::string);
-    bool operator !=(Word other){
-        return lexeme!=other.lexeme||pos!=other.pos;
+    bool operator <(Word other)const{
+        if(lexeme!=other.lexeme)return lexeme<other.lexeme;
+        else return pos<other.pos;
+    }
+
+    bool operator !=(Word other)const {
+        return (lexeme==other.lexeme)&&(pos==other.pos);
     }
 };
 enum Slot{

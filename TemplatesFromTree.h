@@ -17,13 +17,13 @@
 
 struct TreeComp{
 
-    bool operator()(TemplateTree* t1,TemplateTree* t2){
-        if(t1->nodes.size()!=t2->nodes.size()){
+    bool operator()(TemplateTree t1,TemplateTree t2)const{
+        if(t1.nodes.size()!=t2.nodes.size()){
             return true;
         }
         else{
-            for(int i=0;i<t1->nodes.size();i++){
-                if(*(t1->nodes[i])!=*(t2->nodes[i])){
+            for(int i=0;i<t1.nodes.size();i++){
+                if((*(t1.nodes[i]))!=(*(t2.nodes[i]))){
                     return true;
                 }
             }
@@ -39,17 +39,18 @@ struct TripleComp{
 };
 
 struct Tri_Pair;
+struct Word_Pair;
 
 //extern
 extern int i;
 
 extern std::map<Triple*,int,TripleComp> tri_count;
 
-extern std::map<TemplateTree*,int,TreeComp> templateTrees;
+extern std::map<TemplateTree,int> templateTrees;
 
-extern std::map<int,TemplateTree*> id_to_Tree;
+extern std::map<int,TemplateTree> id_to_Tree;
 
-extern Tri_Pair tri_pair;
+extern std::map<Word_Pair,std::map<int,int>> template_matrix;
 
 
 template <typename T>
@@ -70,7 +71,7 @@ public:
 
     void CreateTemplates();
 
-    static void save(std::map<int,TemplateTree*> id_to_tree,std::string filename);
+    static void save(std::map<int,TemplateTree> id_to_tree,std::string filename);
 
     //direction = true means up
     std::string halfPathToString(AbstractNode<T>*begin,AbstractNode<T>*end,bool direction,TemplateTree* templateTree);
@@ -93,6 +94,26 @@ struct Tri_Pair{
     Tri_Pair(Word x1,Word y1):x(x1),y(y1){
 
     }
+
+};
+
+struct Word_Pair{
+    Word x;
+    Word y;
+
+    Word_Pair(Word x1,Word y1):x(x1),y(y1){
+
+    }
+
+    bool operator <(Word_Pair other) const{
+        if(x!=other.x){
+            return x<other.x;
+        }
+        else
+            return y<other.y;
+
+    }
+
 
 };
 
