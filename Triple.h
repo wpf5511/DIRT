@@ -35,7 +35,18 @@ public:
     Slot slot;
 //functions
     std::vector<Word> getSlot(std::string path);//get another slot
+
     Triple(Word w,std::string template_path,Slot slot);
+
+    bool operator <(Triple other)const {
+        if(w!=other.w){
+            return this->w<other.w;
+        }else if(template_path!=other.template_path){
+            return this->template_path<other.template_path;
+        } else{
+            return this->slot<other.slot;
+        }
+    }
 };
 
 

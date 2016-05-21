@@ -52,6 +52,9 @@ void TemplatesFromTree<T>::CreateTemplates() {
                 if(iter==templateTrees.end()){
                     printf("hehe\n");
                 }
+                if(!insert_res.second){
+                    delete templateTree;
+                }
                 int templateTree_id = iter->second;
 
                 std::map<int,int> a_list_of_template;
@@ -77,8 +80,8 @@ void TemplatesFromTree<T>::CreateTemplates() {
 
                 Triple *triple_e = new Triple(Word(end->get_lexeme(),end->get_pos()),path,Slot::SlotY);
 
-                tri_count[triple_b]+=1;
-                tri_count[triple_e]+=1;
+                tri_count[*triple_b]+=1;
+                tri_count[*triple_e]+=1;
             }
         }
     }

@@ -4,7 +4,7 @@
 using namespace std;
 
 int i=0;
-std::map<Triple*,int,TripleComp> tri_count;
+std::map<Triple,int> tri_count;
 
 std::map<TemplateTree,int> templateTrees;
 
