@@ -7,8 +7,7 @@
 using namespace std;
 
 int i=0;
-std::map<Triple,int> tri_count_x;
-std::map<Triple,int> tri_count_y;
+std::map<Triple,int> triples;
 
 std::map<TemplateTree,int> templateTrees;
 
@@ -53,20 +52,25 @@ int main() {
 
     //TemplatesFromTree<int>::save_path(id_to_Tree,"/home/hadoop4/path_file001.txt");
 
-    std::string path1="n:OBJ:v<作出>v:SBJ:n>贡献>n:NMOD:n";
-    std::vector<string> similar_path;
+    std::string path1="n:OBJ:v<作出>v:SBJ:n>发展>n:NMOD:n";
 
     Triple t_center(path1);
     priority_queue<double,vector<double>,greater<double>>sim_score;
     map<double,Triple> tri_score;
 
+    set<Triple> tri_candidate;
     int sim_size=10;
     int i=0;
-    for(auto it=tri_count_x.begin();it!=tri_count_x.end();it++,i++){
-      double score= ComputeSimilarity::sim_between_path(tri_count_x,tri_count_y,t_center,it->first);
+
+    ComputeSimilarity::init(triples);
+    tri_candidate = ComputeSimilarity::get_candidate_triple(triples,t_center);
+    cout<<tri_candidate.size()<<endl;
+
+    for(auto it=tri_candidate.begin();it!=tri_candidate.end();it++,i++){
+      double score= ComputeSimilarity::sim_between_path(triples,t_center,*it);
         if(i<sim_size){
             sim_score.push(score);
-            tri_score.insert({score,it->first});
+            tri_score.insert({score,*it});
         }else if(score>sim_score.top()){
             auto erase_iter = tri_score.find(sim_score.top());
             if(erase_iter==tri_score.end()){

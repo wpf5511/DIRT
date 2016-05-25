@@ -44,9 +44,7 @@ struct Word_Pair;
 //extern
 extern int i;
 
-extern std::map<Triple,int> tri_count_x;
-
-extern std::map<Triple,int> tri_count_y;
+extern std::map<Triple,int> triples;
 
 extern std::map<TemplateTree,int> templateTrees;
 

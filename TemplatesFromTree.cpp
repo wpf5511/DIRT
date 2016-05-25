@@ -80,8 +80,8 @@ void TemplatesFromTree<T>::CreateTemplates() {
 
                 Triple *triple_e = new Triple(Word(end->get_lexeme(),end->get_pos()),path,Slot::SlotY);
 
-                tri_count_x[*triple_b]+=1;
-                tri_count_y[*triple_e]+=1;
+                triples[*triple_b]+=1;
+                triples[*triple_e]+=1;
             }
         }
     }
