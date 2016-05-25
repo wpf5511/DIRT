@@ -15,3 +15,7 @@ Triple::Triple(Word word, std::string template_path, Slot slot):w(word) {
     this->template_path = template_path;
     this->slot = slot;
 }
+
+Triple::Triple(std::string template_path) {
+    this->template_path = template_path;
+}

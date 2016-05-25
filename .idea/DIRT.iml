@@ -5,13 +5,15 @@
       <sourceFolder url="file://$MODULE_DIR$/Triple.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ctbpos.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TemplatesFromTree.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ctbpos.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TreeNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TreeNode.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TemplatesFromTree.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ComputeSimilarity.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ComputeSimilarity.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Triple.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/TemplatesFromTree.cpp" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">

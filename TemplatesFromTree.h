@@ -32,11 +32,11 @@ struct TreeComp{
     }
 };
 
-struct TripleComp{
+/*struct TripleComp{
     bool operator()(Triple* t1,Triple* t2){
         return t1->w!=t2->w||t1->slot!=t2->slot||t1->template_path!=t2->template_path;
     }
-};
+};*/
 
 struct Tri_Pair;
 struct Word_Pair;
@@ -44,7 +44,9 @@ struct Word_Pair;
 //extern
 extern int i;
 
-extern std::map<Triple,int> tri_count;
+extern std::map<Triple,int> tri_count_x;
+
+extern std::map<Triple,int> tri_count_y;
 
 extern std::map<TemplateTree,int> templateTrees;
 
@@ -71,7 +73,9 @@ public:
 
     void CreateTemplates();
 
-    static void save(std::map<int,TemplateTree> id_to_tree,std::string filename);
+    static void save_template(std::map<int,TemplateTree> id_to_tree,std::string filename);
+
+    static void save_path(std::map<int,TemplateTree> id_to_tree,std::string filename);
 
     //direction = true means up
     std::string halfPathToString(AbstractNode<T>*begin,AbstractNode<T>*end,bool direction,TemplateTree* templateTree);

@@ -80,8 +80,8 @@ void TemplatesFromTree<T>::CreateTemplates() {
 
                 Triple *triple_e = new Triple(Word(end->get_lexeme(),end->get_pos()),path,Slot::SlotY);
 
-                tri_count[*triple_b]+=1;
-                tri_count[*triple_e]+=1;
+                tri_count_x[*triple_b]+=1;
+                tri_count_y[*triple_e]+=1;
             }
         }
     }
@@ -199,13 +199,23 @@ std::string TemplatesFromTree<T>::dependencyInfo(AbstractNode<T> *node,bool dire
 }
 template <typename T>
 
-void TemplatesFromTree<T>::save(std::map<int, TemplateTree> id_to_tree, std::string filename) {
+void TemplatesFromTree<T>::save_template(std::map<int, TemplateTree> id_to_tree, std::string filename) {
 
     std::ofstream output(filename,std::ios::out);
 
     for(auto it=id_to_tree.begin();it!=id_to_tree.end();it++){
         output<<it->first<<std::endl;
         output<<it->second.toString();
+    }
+}
+
+template <typename T>
+void TemplatesFromTree<T>::save_path(std::map<int, TemplateTree> id_to_tree, std::string filename) {
+    std::ofstream output(filename,std::ios::out);
+
+    for(auto it=id_to_tree.begin();it!=id_to_tree.end();it++){
+        output<<it->first<<std::endl;
+        output<<it->second.template_string<<std::endl;
     }
 }
 

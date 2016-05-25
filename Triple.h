@@ -19,8 +19,12 @@ struct Word{
         else return pos<other.pos;
     }
 
-    bool operator !=(Word other)const {
+    bool operator ==(Word other)const {
         return (lexeme==other.lexeme)&&(pos==other.pos);
+    }
+
+    bool operator !=(Word other)const{
+        return (lexeme!=other.lexeme)||(pos!=other.pos);
     }
 };
 enum Slot{
@@ -37,6 +41,8 @@ public:
     std::vector<Word> getSlot(std::string path);//get another slot
 
     Triple(Word w,std::string template_path,Slot slot);
+
+    Triple(std::string template_path);
 
     bool operator <(Triple other)const {
         if(w!=other.w){
