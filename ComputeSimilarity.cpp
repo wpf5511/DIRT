@@ -133,12 +133,15 @@ double ComputeSimilarity::sim_between_slots(std::map<Triple, int> triples, Tripl
     return sim;
 }
 
-double ComputeSimilarity::sim_between_path(std::map<Triple, int> triples,Triple t1, Triple t2) {
+double ComputeSimilarity::sim_between_path(std::map<Triple, int> triples,std::string path1, std::string path2) {
 
-    t1.slot=SlotX;
-    t2.slot=SlotX;
-    Triple t1_a_s(t1.w,t1.template_path,SlotY);
-    Triple t2_a_s(t2.w,t2.template_path,SlotY);
+    Triple t1(path1,SlotX);
+    Triple t2(path2,SlotX);
+
+
+
+    Triple t1_a_s(path1,SlotY);
+    Triple t2_a_s(path2,SlotY);
 
     double sim1 = sim_between_slots(triples,t1,t2);
 
@@ -170,12 +173,12 @@ void ComputeSimilarity::init(std::map<Triple, int> triples) {
     }
 }
 
-std::set<Triple> ComputeSimilarity::get_candidate_triple(std::map<Triple, int> triples, Triple t1) {
+std::set<std::string> ComputeSimilarity::get_candidate_triple(std::map<Triple, int> triples, std::string path1) {
 
-    std::set<Triple> resTriple;
+    std::set<std::string> resPath;
     for(auto it=triples.begin();it!=triples.end();it++){
 
-        std::set<Word>t1_words_x=get_words(t1.template_path,SlotX);
+        std::set<Word>t1_words_x=get_words(path1,SlotX);
 
         std::set<Word>t2_words_x=get_words(it->first.template_path,SlotX);
 
@@ -184,7 +187,7 @@ std::set<Triple> ComputeSimilarity::get_candidate_triple(std::map<Triple, int> t
         std::set_intersection(t1_words_x.begin(),t1_words_x.end(),t2_words_x.begin(),t2_words_x.end(),std::inserter(common_x,common_x.begin()));
 
 
-        std::set<Word>t1_words_y=get_words(t1.template_path,SlotY);
+        std::set<Word>t1_words_y=get_words(path1,SlotY);
 
         std::set<Word>t2_words_y=get_words(it->first.template_path,SlotY);
 
@@ -193,11 +196,11 @@ std::set<Triple> ComputeSimilarity::get_candidate_triple(std::map<Triple, int> t
         std::set_intersection(t1_words_y.begin(),t1_words_y.end(),t2_words_y.begin(),t2_words_y.end(),std::inserter(common_y,common_y.begin()));
 
         if(!common_x.empty()&&!common_y.empty()){
-            resTriple.insert(it->first);
+            resPath.insert(it->first.template_path);
         }
 
     }
-    return  resTriple;
+    return  resPath;
 
 
 }

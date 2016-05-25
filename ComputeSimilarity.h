@@ -43,9 +43,9 @@ public:
 
     static double sim_between_slots(std::map<Triple,int>triples,Triple t1,Triple t2);
 
-    static double sim_between_path(std::map<Triple,int>triples,Triple t1,Triple t2);
+    static double sim_between_path(std::map<Triple,int>triples,std::string path1,std::string path2);
 
-    static std::set<Triple> get_candidate_triple(std::map<Triple,int>triples,Triple t1);
+    static std::set<std::string> get_candidate_triple(std::map<Triple,int>triples,std::string path1);
 };
 
 

@@ -54,35 +54,38 @@ int main() {
 
     std::string path1="n:OBJ:v<作出>v:SBJ:n>发展>n:NMOD:n";
 
-    Triple t_center(path1);
-    priority_queue<double,vector<double>,greater<double>>sim_score;
-    map<double,Triple> tri_score;
 
-    set<Triple> tri_candidate;
-    int sim_size=10;
+    priority_queue<double,vector<double>,greater<double>>sim_score;
+    multimap<double,string> path_score;
+
+    set<string> path_candidate;
+    int sim_size=5;
     int i=0;
 
     ComputeSimilarity::init(triples);
-    tri_candidate = ComputeSimilarity::get_candidate_triple(triples,t_center);
-    cout<<tri_candidate.size()<<endl;
+    path_candidate = ComputeSimilarity::get_candidate_triple(triples,path1);
+    cout<<path_candidate.size()<<endl;
 
-    for(auto it=tri_candidate.begin();it!=tri_candidate.end();it++,i++){
-      double score= ComputeSimilarity::sim_between_path(triples,t_center,*it);
+    for(auto it=path_candidate.begin();it!=path_candidate.end();it++,i++){
+      double score= ComputeSimilarity::sim_between_path(triples,path1,*it);
         if(i<sim_size){
             sim_score.push(score);
-            tri_score.insert({score,*it});
+            path_score.insert({score,*it});
         }else if(score>sim_score.top()){
-            auto erase_iter = tri_score.find(sim_score.top());
-            if(erase_iter==tri_score.end()){
+            auto erase_iter = path_score.equal_range(sim_score.top());
+            if(erase_iter.first==path_score.end()){
                 cout<<"must not happen";
             }
-            tri_score.erase(erase_iter);
+            path_score.erase(erase_iter.first);
             sim_score.pop();
+
+            path_score.insert({score,*it});
+            sim_score.push(score);
         }
     }
 
-    for(auto it=tri_score.begin();it!=tri_score.end();it++){
-        cout<<it->first<<"   "<<it->second.template_path<<endl;
+    for(auto it=path_score.begin();it!=path_score.end();it++){
+        cout<<it->first<<"   "<<it->second<<endl;
     }
 
     cout << "Hello, World!" << endl;

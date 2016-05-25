@@ -42,7 +42,7 @@ public:
 
     Triple(Word w,std::string template_path,Slot slot);
 
-    Triple(std::string template_path);
+    Triple(std::string template_path,Slot slot);
 
     bool operator <(Triple other)const {
         if(w!=other.w){
