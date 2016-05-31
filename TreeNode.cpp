@@ -3,7 +3,7 @@
 //
 
 #include "TreeNode.h"
-
+#include <algorithm>
 //ZparNode method
 
 int ZparNode::get_parent() {
@@ -193,6 +193,17 @@ void TemplateTree::set_children_array() {
         if(nodes[i]->get_parent()!=-1){
             children_array[nodes[i]->get_parent()].push_back(i);
         }
+    }
+}
+
+void TemplateTree::set_rewrite_sentence() {
+
+    std::sort(nodes.begin(),nodes.end(),[](TemplateNode* t1,TemplateNode* t2){
+        return t1->rewrite_index<t2->rewrite_index;
+    });
+
+    for(int i=0;i<nodes.size();i++){
+        rewrite_sentence.push_back(nodes[i]->lexeme);
     }
 }
 

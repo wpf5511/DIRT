@@ -51,6 +51,8 @@ class TemplateNode:public ZparNode{
 public:
     Slot slot;
     bool isSlot= false;
+
+    int rewrite_index;// rewrite sentence's word position
     TemplateNode(int parent_id,std::string dependency,std::string pos,std::string lexeme);
     TemplateNode(AbstractNode<int>* zparNode);//TemplateNode 的dependency为pos:dependency:dependency
     void setSlot(Slot type);
@@ -87,10 +89,12 @@ public:
     std::vector<TemplateNode*> nodes;
     std::map<int,std::vector<int>> children_array;
     std::string template_string;
+    std::vector<std::string> rewrite_sentence;
     std::string toString();
 
     void add_node(TemplateNode* node);
     void set_children_array();
+    void set_rewrite_sentence();
     std::map<int,std::vector<int>> get_children_array();
     TemplateNode* get_Node(int id);
     TemplateNode* get_Root();

@@ -11,12 +11,18 @@ Word::Word(std::string lexeme, std::string pos) {
     this->pos = pos;
 }
 
-Triple::Triple(Word word, std::string template_path, Slot slot):w(word) {
+Triple::Triple(Word word, std::string template_path,std::vector<std::string>rewrite_sentence,Slot slot):w(word) {
     this->template_path = template_path;
+    this->rewrite_sentence = rewrite_sentence;
     this->slot = slot;
 }
 
 Triple::Triple(std::string template_path,Slot slot) {
+    this->template_path = template_path;
+    this->slot = slot;
+}
+
+Triple::Triple(Word word, std::string template_path,Slot slot):w(word){
     this->template_path = template_path;
     this->slot = slot;
 }

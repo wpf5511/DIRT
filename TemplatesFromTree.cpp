@@ -42,6 +42,9 @@ void TemplatesFromTree<T>::CreateTemplates() {
 
                 //push to the templateTrees
                 templateTree->template_string = path;
+                templateTree->set_rewrite_sentence();
+
+                std::vector<std::string> rewrite=templateTree->rewrite_sentence;
 
                 auto insert_res = templateTrees.insert({*templateTree,i});
                 if(insert_res.second){
@@ -76,9 +79,9 @@ void TemplatesFromTree<T>::CreateTemplates() {
                 //a_list_of_template.insert({i,count});
 
                 //Inset triple
-                Triple *triple_b = new Triple(Word(begin->get_lexeme(),begin->get_pos()),path,Slot::SlotX);
+                Triple *triple_b = new Triple(Word(begin->get_lexeme(),begin->get_pos()),path,rewrite,Slot::SlotX);
 
-                Triple *triple_e = new Triple(Word(end->get_lexeme(),end->get_pos()),path,Slot::SlotY);
+                Triple *triple_e = new Triple(Word(end->get_lexeme(),end->get_pos()),path,rewrite,Slot::SlotY);
 
                 triples[*triple_b]+=1;
                 triples[*triple_e]+=1;
@@ -98,6 +101,7 @@ std::string TemplatesFromTree<T>::halfPathToString(AbstractNode<T> *begin, Abstr
         TemplateNode *templateNode = new TemplateNode(begin);
         templateNode->dependency=depinfo;
         templateNode->parent_id=templateTree->nodes.size()+1;
+        templateNode->rewrite_index = begin->get_Id();
         //direction up slotx
         if(direction){
             templateNode->setSlot(Slot::SlotX);
@@ -118,6 +122,7 @@ std::string TemplatesFromTree<T>::halfPathToString(AbstractNode<T> *begin, Abstr
             TemplateNode *templateNode = new TemplateNode(current);
             templateNode->dependency=depinfo;
             templateNode->parent_id=templateTree->nodes.size()+1;
+            templateNode->rewrite_index = current->get_Id();// generate the template sentence
             templateTree->add_node(templateNode);
 
             current = tree->get_Node(current->get_parent());

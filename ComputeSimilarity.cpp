@@ -173,9 +173,9 @@ void ComputeSimilarity::init(std::map<Triple, int> triples) {
     }
 }
 
-std::set<std::string> ComputeSimilarity::get_candidate_triple(std::map<Triple, int> triples, std::string path1) {
+std::map<std::string,std::vector<std::string>> ComputeSimilarity::get_candidate_triple(std::map<Triple, int> triples, std::string path1) {
 
-    std::set<std::string> resPath;
+    std::map<std::string,std::vector<std::string>> resPath;
     for(auto it=triples.begin();it!=triples.end();it++){
 
         std::set<Word>t1_words_x=get_words(path1,SlotX);
@@ -196,7 +196,7 @@ std::set<std::string> ComputeSimilarity::get_candidate_triple(std::map<Triple, i
         std::set_intersection(t1_words_y.begin(),t1_words_y.end(),t2_words_y.begin(),t2_words_y.end(),std::inserter(common_y,common_y.begin()));
 
         if(!common_x.empty()&&!common_y.empty()){
-            resPath.insert(it->first.template_path);
+            resPath.insert({it->first.template_path,it->first.rewrite_sentence});
         }
 
     }

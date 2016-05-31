@@ -36,13 +36,16 @@ class Triple {
 public:
     Word w;
     std::string template_path;
+    std::vector<std::string> rewrite_sentence;
     Slot slot;
 //functions
     std::vector<Word> getSlot(std::string path);//get another slot
 
-    Triple(Word w,std::string template_path,Slot slot);
+    Triple(Word w,std::string template_path,std::vector<std::string> rewrite_sentence,Slot slot);
 
     Triple(std::string template_path,Slot slot);
+
+    Triple(Word word, std::string template_path,Slot slot);
 
     bool operator <(Triple other)const {
         if(w!=other.w){
