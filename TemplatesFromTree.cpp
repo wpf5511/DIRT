@@ -24,6 +24,7 @@ void TemplatesFromTree<T>::CreateTemplates() {
                 TemplateNode *rootNode = new TemplateNode(common);
                 rootNode->parent_id=-1;
                 rootNode->dependency="ROOT";
+                rootNode->rewrite_index = common->get_Id();
                 templateTree->add_node(rootNode);
 
                 //add subtree node right

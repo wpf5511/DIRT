@@ -53,7 +53,12 @@ TemplateNode::TemplateNode(int parent_id, std::string dependency,std::string pos
 }
 
 void TemplateNode::setSlot(Slot type) {
-    this->lexeme="";
+    if(type==SlotX){
+        this->lexeme="X";
+    }else{
+        this->lexeme="Y";
+    }
+    //this->lexeme="";
     this->pos="";
     this->slot = type;
     this->isSlot = true;

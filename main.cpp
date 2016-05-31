@@ -15,14 +15,6 @@ std::map<int,TemplateTree> id_to_Tree;
 
 std::map<Word_Pair,std::map<int,int>> template_matrix;
 
-template  <typename T>
-ostream& operator<< (ostream& out,const vector<T>&vec){
-    for(auto item:vec){
-        out<<item<<" ";
-    }
-}
-
-
 
 int main() {
 
@@ -59,6 +51,7 @@ int main() {
 
     //TemplatesFromTree<int>::save_path(id_to_Tree,"/home/hadoop4/path_file001.txt");
 
+
     std::string path1="n:OBJ:v<作出>v:SBJ:n>发展>n:NMOD:n";
 
 
@@ -93,9 +86,25 @@ int main() {
     }
 
     for(auto it=path_score.begin();it!=path_score.end();it++){
-        cout<<it->first<<"   "<<it->second<<" "<<path_candidate[it->second]<<endl;
-    }
+        cout<<it->first<<"   "<<it->second<<" "<<endl;
 
+        string path_string = it->second;
+
+        auto iter=path_candidate.find(path_string);
+
+        if(iter!=path_candidate.end()){
+            vector<string> res =iter->second;
+
+            for(int i=0;i<res.size();i++){
+                cout<<res[i]<<" ";
+            }
+
+            cout<<endl;
+
+        }
+
+    }
+    
     cout << "Hello, World!" << endl;
     return 0;
 }
