@@ -15,6 +15,12 @@ std::map<int,TemplateTree> id_to_Tree;
 
 std::map<Word_Pair,std::map<int,int>> template_matrix;
 
+std::map<Real_Triple,int> r_triples;
+
+std::set<string> noun_phrases;
+
+std::set<string> verb_phrases;
+
 
 int main() {
 
@@ -32,6 +38,7 @@ int main() {
             zparTree->set_lcaMatrix();
             templatesFromTree.tree=zparTree;
             templatesFromTree.CreateTemplates();
+            templatesFromTree.extractNP();
             delete zparTree;
             zparTree = new ZparTree();
         }
@@ -51,6 +58,7 @@ int main() {
 
     //TemplatesFromTree<int>::save_path(id_to_Tree,"/home/hadoop4/path_file001.txt");
 
+    TemplatesFromTree<int>::save_nps(noun_phrases,"/home/hadoop4/noun_phrases2.txt");
 
     std::string path1="n:OBJ:v<作出>v:SBJ:n>发展>n:NMOD:n";
 
@@ -104,7 +112,7 @@ int main() {
         }
 
     }
-    
+
     cout << "Hello, World!" << endl;
     return 0;
 }

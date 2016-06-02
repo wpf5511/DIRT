@@ -3,6 +3,9 @@
 //
 
 #include "TemplatesFromTree.h"
+#include <algorithm>
+#include <sstream>
+#include <queue>
 
 template <typename T>
 void TemplatesFromTree<T>::CreateTemplates() {
@@ -80,12 +83,20 @@ void TemplatesFromTree<T>::CreateTemplates() {
                 //a_list_of_template.insert({i,count});
 
                 //Inset triple
-                Triple *triple_b = new Triple(Word(begin->get_lexeme(),begin->get_pos()),path,rewrite,Slot::SlotX);
+                Word wordx = Word(begin->get_lexeme(),begin->get_pos());
 
-                Triple *triple_e = new Triple(Word(end->get_lexeme(),end->get_pos()),path,rewrite,Slot::SlotY);
+                Word wordy = Word(end->get_lexeme(),end->get_pos());
+
+                Triple *triple_b = new Triple(wordx,path,rewrite,Slot::SlotX);
+
+                Triple *triple_e = new Triple(wordy,path,rewrite,Slot::SlotY);
 
                 triples[*triple_b]+=1;
                 triples[*triple_e]+=1;
+
+                r_triples[Real_Triple(wordx,path,wordy)]+=1;
+
+
             }
         }
     }
@@ -222,6 +233,91 @@ void TemplatesFromTree<T>::save_path(std::map<int, TemplateTree> id_to_tree, std
     for(auto it=id_to_tree.begin();it!=id_to_tree.end();it++){
         output<<it->first<<std::endl;
         output<<it->second.template_string<<std::endl;
+    }
+}
+
+template <typename T>
+void TemplatesFromTree<T>::save_nps(std::set<std::string> nps,std::string filename) {
+
+    std::ofstream output(filename,std::ios::out);
+
+    for(auto it=nps.begin();it!=nps.end();it++){
+        output<<*it<<std::endl;
+    }
+}
+
+template <typename T>
+void TemplatesFromTree<T>::extractNP() {
+    std::vector<AbstractNode<T>*> endPoints = tree->findEndpoints();
+    for(auto nnode:endPoints){
+
+        int nnode_id = nnode->get_Id();
+
+
+
+        std::vector<int> res_vector;
+
+        std::queue<int> bfs_que;
+
+        bfs_que.push(nnode_id);
+
+        //bfs travel
+        while(!bfs_que.empty()){
+
+            int front_id = bfs_que.front();
+
+            //children id
+            auto vec_id =tree->get_Node(front_id)->get_children(tree);
+
+            res_vector.push_back(front_id);//visit it
+
+            bfs_que.pop();
+
+            for(auto child_id:vec_id){
+                bfs_que.push(child_id);
+            }
+        }
+
+
+        std::sort(res_vector.begin(),res_vector.end());//children and parent
+
+        std::ostringstream out;
+        for(auto it=res_vector.begin();it!=res_vector.end();it++){
+            std::string lexeme=tree->get_Node(*it)->get_lexeme();
+            out<<lexeme<<": ";
+        }
+        noun_phrases.insert(out.str());
+    }
+}
+
+template <typename T>
+void TemplatesFromTree<T>::extractVP() {
+
+    std::vector<AbstractNode<T>*> VVPoints = tree->findVVpoints();
+
+    for(auto vnode:VVPoints){
+        //children id
+        auto parent_id =vnode->get_parent();
+
+        if(parent_id!=-1){
+
+            auto parent_node = tree->get_Node(parent_id);
+
+            std::string ctb_pos = parent_node->get_pos();
+
+            burstpos bur_pos = ctbpos::ctb_to_burst.at(ctb_pos);
+
+            if(bur_pos==burstpos::VERB){
+                std::ostringstream out;
+                out<<parent_node->get_lexeme()<<"  ";
+                out<<parent_node->get_pos()<<":"<<vnode->get_dependency()<<":"<<vnode->get_pos()<<"  ";
+                out<<vnode->get_lexeme();
+
+                verb_phrases.insert(out.str());
+            }
+
+        }
+
     }
 }
 

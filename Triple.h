@@ -7,7 +7,7 @@
 
 #include <string>
 #include <vector>
-
+#include <set>
 struct Word{
 
     std::string lexeme;
@@ -39,7 +39,7 @@ public:
     std::vector<std::string> rewrite_sentence;
     Slot slot;
 //functions
-    std::vector<Word> getSlot(std::string path);//get another slot
+    std::set<Word> getSlot(std::string path);//get another slot
 
     Triple(Word w,std::string template_path,std::vector<std::string> rewrite_sentence,Slot slot);
 
@@ -54,6 +54,29 @@ public:
             return this->template_path<other.template_path;
         } else{
             return this->slot<other.slot;
+        }
+    }
+};
+
+class Real_Triple{
+
+public:
+    Word X;
+    std::string template_path;
+    Word Y;
+    //functions
+
+    Real_Triple(Word wordx,std::string temp_path,Word wordy);
+
+    bool operator <(Real_Triple other)const{
+        if(X!=other.X){
+            return this->X<other.X;
+        }
+        else if(template_path!=other.template_path){
+            return template_path<other.template_path;
+        }
+        else{
+            return this->Y<other.Y;
         }
     }
 };

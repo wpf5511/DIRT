@@ -79,6 +79,8 @@ public:
 
     virtual std::vector<AbstractNode<U>*> findEndpoints()=0;
 
+    virtual std::vector<AbstractNode<U>*> findVVpoints()=0;
+
     virtual AbstractNode<U>* getLeastCommonAncestorOf(AbstractNode<U> *begin,AbstractNode<U> *end)=0;
 
     virtual AbstractNode<U>* get_Node(int id)=0;
@@ -135,6 +137,7 @@ public:
 
     virtual std::map<int,std::vector<int>> get_children_array();
     virtual std::vector<AbstractNode<int>*> findEndpoints();
+    virtual std::vector<AbstractNode<int>*> findVVpoints();
     virtual AbstractNode<int>* getLeastCommonAncestorOf(AbstractNode<int> *begin,AbstractNode<int> *end);
     virtual AbstractNode<int>* get_Node(int id);
 

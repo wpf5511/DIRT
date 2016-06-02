@@ -52,6 +52,12 @@ extern std::map<int,TemplateTree> id_to_Tree;
 
 extern std::map<Word_Pair,std::map<int,int>> template_matrix;
 
+extern std::map<Real_Triple,int> r_triples;
+
+extern std::set<std::string> noun_phrases;
+
+extern std::set<std::string> verb_phrases;
+
 
 template <typename T>
 class TemplatesFromTree {
@@ -75,12 +81,18 @@ public:
 
     static void save_path(std::map<int,TemplateTree> id_to_tree,std::string filename);
 
+    static void save_nps(std::set<std::string>,std::string filename);
+
     //direction = true means up
     std::string halfPathToString(AbstractNode<T>*begin,AbstractNode<T>*end,bool direction,TemplateTree* templateTree);
 
     std::string posOfInfo(std::string pos);
 
     std::string dependencyInfo(AbstractNode<T>*node,bool direction);
+
+    //
+    void extractNP();
+    void extractVP();
 };
 
 struct Tri_Pair{

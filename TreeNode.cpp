@@ -112,6 +112,19 @@ std::vector<AbstractNode<int>*> ZparTree::findEndpoints() {
     return ret;
 }
 
+std::vector<AbstractNode<int>*> ZparTree::findVVpoints() {
+
+    std::vector<AbstractNode<int>*> ret;
+    for(auto point:this->nodes){
+        std::string ctb_pos = point->pos;
+        burstpos bur_pos = ctbpos::ctb_to_burst.at(ctb_pos);
+        if(bur_pos==burstpos::VERB){
+            ret.push_back(point);
+        }
+    }
+    return ret;
+}
+
 void ZparTree::set_lcaMatrix() {
 
     int root_id;
