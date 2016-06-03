@@ -30,14 +30,14 @@ public:
 
     static std::vector<Real_Triple*> getrtriples_fromwordy(Word wordy);
 
-    static std::vector< std::tuple< std::vector<Real_Triple*>,std::vector<Real_Triple*> > > get_triples_pair(std::string path_str);
+    static std::vector< std::tuple< Real_Triple*,Real_Triple* > > get_triples_pair(std::string path_str,std::map<Real_Triple,int>r_triples);
 
-    static std::vector< std::tuple< std::vector<Real_Triple*>,std::vector<Real_Triple*> > > get_highscore_triples_pair(
-            std::vector< std::tuple< std::vector<Real_Triple*>,std::vector<Real_Triple*> > > triples_pair,int counts
+    static std::vector< std::tuple< Real_Triple*,Real_Triple* > > get_highscore_triples_pair(
+            std::vector< std::tuple< Real_Triple*,Real_Triple* > > triples_pair,int counts,std::map<Real_Triple, int>r_triples
     )
 
     static std::vector<double > compute_triples_pair_score(
-            std::vector< std::tuple< std::vector<Real_Triple*>,std::vector<Real_Triple*> > >,
+            std::vector< std::tuple<Real_Triple*,Real_Triple* > >,
             std::map<Real_Triple,int>);
 };
 
