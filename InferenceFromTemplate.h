@@ -18,6 +18,8 @@ public:
 
     static std::map<Word,std::vector<Real_Triple*>> wordy_to_rtriple;
 
+    static std::map<Word_Pair,std::vector<Real_Triple*>> wpair_to_rtriple;
+
     static void init(std::map<Real_Triple,int>r_triples);
 
     //function
@@ -27,6 +29,16 @@ public:
     static std::vector<Real_Triple*> getrtriples_fromwordx(Word wordx);
 
     static std::vector<Real_Triple*> getrtriples_fromwordy(Word wordy);
+
+    static std::vector< std::tuple< std::vector<Real_Triple*>,std::vector<Real_Triple*> > > get_triples_pair(std::string path_str);
+
+    static std::vector< std::tuple< std::vector<Real_Triple*>,std::vector<Real_Triple*> > > get_highscore_triples_pair(
+            std::vector< std::tuple< std::vector<Real_Triple*>,std::vector<Real_Triple*> > > triples_pair,int counts
+    )
+
+    static std::vector<double > compute_triples_pair_score(
+            std::vector< std::tuple< std::vector<Real_Triple*>,std::vector<Real_Triple*> > >,
+            std::map<Real_Triple,int>);
 };
 
 
